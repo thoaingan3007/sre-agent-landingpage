@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Azure SRE Agent — Seller One-Pager</title>
+<style>
+  :root {
+    --ab: #0078D4; --ad: #004578; --al: #DEECF9; --aa: #50E6FF;
+    --gn: #107C10; --or: #D83B01; --pu: #8764B8;
+    --g50: #F8F9FA; --g100: #F3F2F1; --g200: #E1DFDD;
+    --g600: #605E5C; --g800: #323130; --g900: #201F1E;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Segoe UI','Inter',-apple-system,sans-serif;background:#fff;color:var(--g800);line-height:1.5;-webkit-font-smoothing:antialiased}
+  .pg{max-width:1100px;margin:0 auto;padding:0 24px}
+  .hdr{background:linear-gradient(135deg,var(--ad) 0%,var(--ab) 50%,#2B88D8 100%);color:#fff;padding:32px 0 28px;position:relative;overflow:hidden}
+  .hdr::after{content:'';position:absolute;top:-60%;right:-10%;width:500px;height:500px;background:radial-gradient(circle,rgba(80,230,255,.15) 0%,transparent 70%);border-radius:50%}
+  .hdr-in{max-width:1100px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:1}
+  .hdr-l{flex:1}
+  .badge{display:inline-block;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.3);border-radius:20px;padding:4px 14px;font-size:11px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;margin-bottom:12px}
+  .hdr h1{font-size:32px;font-weight:800;letter-spacing:-.5px;margin-bottom:6px}
+  .hdr h1 span{color:var(--aa)}
+  .hdr .tag{font-size:15px;opacity:.92;max-width:520px}
+  .hdr-r{display:flex;flex-direction:column;gap:8px;align-items:flex-end}
+  .hst{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:10px;padding:10px 18px;text-align:center;min-width:180px}
+  .hst .v{font-size:22px;font-weight:700;color:var(--aa)}
+  .hst .l{font-size:11px;opacity:.8;text-transform:uppercase;letter-spacing:.4px}
+  .ql{background:var(--g900);padding:10px 0}
+  .ql-in{max-width:1100px;margin:0 auto;padding:0 24px;display:flex;gap:24px;align-items:center;flex-wrap:wrap}
+  .ql a{color:var(--aa);text-decoration:none;font-size:12px;font-weight:600;transition:color .2s}
+  .ql a:hover{color:#fff}
+  .ql .sep{color:#555;font-size:10px}
+  .st{font-size:16px;font-weight:700;color:var(--ad);margin-bottom:14px;padding-bottom:6px;border-bottom:2px solid var(--ab);display:inline-block}
+  .mg{display:grid;grid-template-columns:1fr 1fr;gap:24px;padding:24px 0}
+  .cd{background:#fff;border:1px solid var(--g200);border-radius:10px;padding:20px;transition:box-shadow .2s}
+  .cd:hover{box-shadow:0 4px 16px rgba(0,0,0,.08)}
+  .vg{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .vi{display:flex;gap:10px;align-items:flex-start}
+  .vic{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+  .vib{background:var(--al)}.vig{background:#DFF6DD}.vio{background:#FED9CC}.vip{background:#EDE3F6}
+  .vi h4{font-size:13px;font-weight:700;color:var(--g900);margin-bottom:2px}
+  .vi p{font-size:11.5px;color:var(--g600);line-height:1.4}
+  .pb{background:linear-gradient(135deg,#F0F6FF,#DEECF9);border:1px solid #B4D6FA;border-radius:10px;padding:18px 20px}
+  .pr{display:flex;justify-content:space-between;align-items:center;padding:6px 0;font-size:12.5px}
+  .pr+.pr{border-top:1px solid rgba(0,120,212,.15)}
+  .pr .la{color:var(--g600)}.pr .va{font-weight:700;color:var(--ad)}
+  .pn{font-size:11px;color:var(--g600);margin-top:8px;font-style:italic}
+  .cl{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:6px 16px}
+  .cl li{font-size:12px;color:var(--g800);padding:4px 0;display:flex;align-items:center;gap:6px}
+  .cl li::before{content:'✓';color:var(--gn);font-weight:700;font-size:13px}
+  .ir{display:flex;gap:10px;flex-wrap:wrap}
+  .ib{background:var(--g100);border:1px solid var(--g200);border-radius:6px;padding:5px 12px;font-size:11.5px;font-weight:600;color:var(--g800)}
+  .sg{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+  .si{background:var(--g50);border-radius:6px;padding:8px 10px;font-size:11px;font-weight:500;color:var(--g800);text-align:center}
+  .si .sc{font-size:9px;text-transform:uppercase;letter-spacing:.4px;color:var(--ab);font-weight:700;margin-bottom:2px}
+  .rt{display:flex;gap:8px;margin-top:6px}
+  .rtg{background:#DFF6DD;color:var(--gn);font-size:11px;font-weight:600;padding:3px 10px;border-radius:4px}
+  .fw{grid-column:1/-1}
+  .is{display:flex;gap:0;border-radius:10px;overflow:hidden;border:1px solid var(--g200)}
+  .ii{flex:1;padding:16px 20px;text-align:center;background:#fff}
+  .ii+.ii{border-left:1px solid var(--g200)}
+  .ii .m{font-size:26px;font-weight:800;color:var(--ab);line-height:1}
+  .ii .ml{font-size:11px;color:var(--g600);margin-top:4px;font-weight:500}
+  .lg{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .li{display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--g50);border-radius:6px;text-decoration:none;transition:background .2s}
+  .li:hover{background:var(--al)}
+  .lic{width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:14px;background:var(--al);flex-shrink:0}
+  .li .lt{font-size:12px;font-weight:600;color:var(--ab)}
+  .li .ld{font-size:10.5px;color:var(--g600)}
+  .ds{background:var(--g50);border-top:2px solid var(--ab);padding:20px 0 16px}
+  .dg{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+  .dc{background:#fff;border:1px solid var(--g200);border-radius:8px;padding:16px}
+  .dc h4{font-size:13px;font-weight:700;color:var(--ad);margin-bottom:6px}
+  .dc p{font-size:11.5px;color:var(--g600);line-height:1.45;margin-bottom:8px}
+  .dc a{color:var(--ab);font-size:12px;font-weight:600;text-decoration:none}
+  .dc a:hover{text-decoration:underline}
+  .ft{background:var(--g900);color:#ccc;padding:18px 0}
+  .ft-in{max-width:1100px;margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+  .ft a{color:var(--aa);text-decoration:none;font-size:12px}
+  .ft a:hover{color:#fff}
+  .ft .ct{font-size:12px}
+  .ft .ct strong{color:#fff}
+  @media print{body{font-size:11px}.pg{max-width:100%}.cd:hover{box-shadow:none}}
+</style>
+</head>
+<body>
+<div class="hdr"><div class="hdr-in">
+<div class="hdr-l">
+<div class="badge">Generally Available — April 2026</div>
+<h1>Azure <span>SRE Agent</span></h1>
+<p class="tag">AI-powered site reliability engineering that diagnoses issues, automates incident response, and keeps your cloud running — 24/7, with human oversight.</p>
+</div>
+<div class="hdr-r">
+<div class="hst"><div class="v">&#8595; MTTR</div><div class="l">Faster Resolution</div></div>
+<div class="hst"><div class="v">24/7</div><div class="l">Autonomous Monitoring</div></div>
+</div>
+</div></div>
+<div class="ql"><div class="ql-in">
+<a href="https://azure.microsoft.com/en-us/products/sre-agent" target="_blank">&#127760; Product Page</a><span class="sep">|</span>
+<a href="https://learn.microsoft.com/azure/sre-agent/" target="_blank">&#128218; Docs</a><span class="sep">|</span>
+<a href="https://azure.microsoft.com/en-us/pricing/details/sre-agent/" target="_blank">&#128176; Pricing</a><span class="sep">|</span>
+<a href="https://sre.azure.com" target="_blank">&#128640; Portal</a><span class="sep">|</span>
+<a href="https://techcommunity.microsoft.com/tag/azure%20sre%20agent" target="_blank">&#128221; Blog</a><span class="sep">|</span>
+<a href="https://microsoft.seismic.com/Link/Content/DCXV34CpJJfbgGcCDPMP84M3jbDd" target="_blank">&#128202; Seismic Deck</a><span class="sep">|</span>
+<a href="https://aka.ms/sreagent/youtube" target="_blank">&#127916; Videos</a>
+</div></div>
+
+<div class="pg">
+<div style="padding:20px 0 0">
+<div class="is">
+<div class="ii"><div class="m">&#8595; 60%+</div><div class="ml">Reduction in MTTR</div></div>
+<div class="ii"><div class="m">&#8595; 80%</div><div class="ml">Less On-Call Toil</div></div>
+<div class="ii"><div class="m">24/7</div><div class="ml">Continuous Monitoring</div></div>
+<div class="ii"><div class="m">100+</div><div class="ml">Azure Services Supported</div></div>
+</div></div>
+
+<div class="mg">
+
+<div class="cd">
+<div class="st">Why Azure SRE Agent?</div>
+<div class="vg">
+<div class="vi"><div class="vic vib">&#128269;</div><div><h4>Automated Root Cause Analysis</h4><p>Multi-layer investigation across apps, platform &amp; infra. Correlates telemetry, tests hypotheses, explains root cause.</p></div></div>
+<div class="vi"><div class="vic vig">&#9889;</div><div><h4>Intelligent Incident Response</h4><p>Connects to PagerDuty, ServiceNow &amp; Azure Monitor. Automates triage, mitigation and resolution.</p></div></div>
+<div class="vi"><div class="vic vio">&#129504;</div><div><h4>Continuous Learning</h4><p>Captures knowledge from every incident. Surfaces past resolutions &amp; runbooks in real time. Gets smarter over time.</p></div></div>
+<div class="vi"><div class="vic vip">&#128737;&#65039;</div><div><h4>Controlled Automation</h4><p>Advisory-only or autonomous mode with guardrails. RBAC controls, approval flows, and audit trails built in.</p></div></div>
+</div></div>
+
+<div class="cd">
+<div class="st">Pricing (AAU-Based)</div>
+<div class="pb">
+<div class="pr"><span class="la">Billing Unit</span><span class="va">Azure Agent Unit (AAU)</span></div>
+<div class="pr"><span class="la">Always-On Flow (Fixed)</span><span class="va">4 AAU / agent-hour</span></div>
+<div class="pr"><span class="la">Active Flow (Variable)</span><span class="va">Token-based per model</span></div>
+<div class="pr"><span class="la">AAU Unit Price</span><span class="va">~$0.10 / AAU</span></div>
+<div class="pr"><span class="la">Est. Baseline Cost</span><span class="va">~$292/mo per agent</span></div>
+<div class="pr"><span class="la">Spending Controls</span><span class="va">Monthly AAU limit in portal</span></div>
+</div>
+<p class="pn">Consolidate workloads under one agent to reduce always-on costs. Active flow varies by model (Claude Opus, GPT, etc.) <a href="https://azure.microsoft.com/en-us/pricing/details/sre-agent/" target="_blank" style="color:var(--ab)">Full pricing &#8594;</a></p>
+</div>
+
+<div class="cd">
+<div class="st">Key Capabilities</div>
+<ul class="cl">
+<li>Natural language diagnosis</li><li>Automated root cause analysis</li>
+<li>Multi-service incident triage</li><li>Scheduled proactive health checks</li>
+<li>Custom subagents &amp; runbooks</li><li>Knowledge base / memory</li>
+<li>Code-aware investigation (GitHub/ADO)</li><li>MCP extensibility framework</li>
+<li>Email reports via Outlook</li><li>Incident response plans</li>
+<li>Azure CLI remediation</li><li>RBAC &amp; governance controls</li>
+</ul>
+<div style="margin-top:14px">
+<div style="font-size:11px;font-weight:600;color:var(--g600);margin-bottom:6px">SUPPORTED INTEGRATIONS</div>
+<div class="ir">
+<span class="ib">Azure Monitor</span><span class="ib">PagerDuty</span><span class="ib">ServiceNow</span>
+<span class="ib">GitHub</span><span class="ib">Azure DevOps</span><span class="ib">Grafana</span>
+<span class="ib">Outlook</span><span class="ib">Teams</span><span class="ib">Custom MCP</span>
+</div></div></div>
+
+<div class="cd">
+<div class="st">Azure Services &amp; Regions</div>
+<div class="sg">
+<div class="si"><div class="sc">Compute</div>VMs, AKS, App Service, Functions, Container Apps</div>
+<div class="si"><div class="sc">Storage</div>Blob, Files, Managed Disks, Storage Accounts</div>
+<div class="si"><div class="sc">Networking</div>VNets, LBs, App Gateways, NSGs</div>
+<div class="si"><div class="sc">Databases</div>SQL, Cosmos DB, PostgreSQL, Redis</div>
+<div class="si"><div class="sc">Monitoring</div>Azure Monitor, Log Analytics, App Insights</div>
+<div class="si"><div class="sc">Any Azure Service</div>Via Azure CLI &amp; REST APIs</div>
+</div>
+<div style="margin-top:12px">
+<div style="font-size:11px;font-weight:600;color:var(--g600);margin-bottom:4px">AVAILABLE REGIONS</div>
+<div class="rt"><span class="rtg">East US 2</span><span class="rtg">Sweden Central</span><span class="rtg">Australia East</span></div>
+<p style="font-size:10.5px;color:var(--g600);margin-top:6px">Agent deploys in these regions — monitored resources can be in any Azure region.</p>
+</div></div>
+<div class="cd fw">
+<div class="st">Essential Resources &amp; Links</div>
+<div class="lg">
+<a class="li" href="https://azure.microsoft.com/en-us/products/sre-agent" target="_blank">
+<div class="lic">&#127760;</div><div><div class="lt">Product Page</div><div class="ld">Official Azure SRE Agent product page</div></div></a>
+<a class="li" href="https://learn.microsoft.com/azure/sre-agent/" target="_blank">
+<div class="lic">&#128218;</div><div><div class="lt">Documentation</div><div class="ld">Microsoft Learn — full docs &amp; guides</div></div></a>
+<a class="li" href="https://azure.microsoft.com/en-us/pricing/details/sre-agent/" target="_blank">
+<div class="lic">&#128176;</div><div><div class="lt">Pricing Details</div><div class="ld">AAU pricing, calculator &amp; cost guidance</div></div></a>
+<a class="li" href="https://techcommunity.microsoft.com/tag/azure%20sre%20agent" target="_blank">
+<div class="lic">&#128221;</div><div><div class="lt">Tech Community Blog</div><div class="ld">Announcements, updates &amp; deep dives</div></div></a>
+<a class="li" href="https://microsoft.seismic.com/Link/Content/DCXV34CpJJfbgGcCDPMP84M3jbDd" target="_blank">
+<div class="lic">&#128202;</div><div><div class="lt">Seismic Deck (100 Level)</div><div class="ld">Shareable customer-facing pitch deck</div></div></a>
+<a class="li" href="https://sre.azure.com" target="_blank">
+<div class="lic">&#128640;</div><div><div class="lt">SRE Agent Portal</div><div class="ld">sre.azure.com — agent management console</div></div></a>
+<a class="li" href="https://aka.ms/sreagent/lab" target="_blank">
+<div class="lic">&#129514;</div><div><div class="lt">Self-Paced Hands-On Lab</div><div class="ld">Official Microsoft learn lab experience</div></div></a>
+<a class="li" href="https://aka.ms/sreagent/youtube" target="_blank">
+<div class="lic">&#127916;</div><div><div class="lt">Video Demos &amp; Tutorials</div><div class="ld">YouTube — technical demos &amp; walkthroughs</div></div></a>
+</div></div>
+
+</div></div>
+
+<div class="ds"><div class="pg">
+<div class="st">Demo Environment &amp; Sandbox</div>
+<div class="dg">
+<div class="dc">
+<h4>&#129514; Demo Sandbox Repository</h4>
+<p>Fully automated lab: deploys AKS + multi-service app + SRE Agent with 10 breakable scenarios. One-command deploy, includes Dev Container.</p>
+<a href="https://github.com/matthansen0/azure-sre-agent-sandbox" target="_blank">github.com/matthansen0/azure-sre-agent-sandbox &#8594;</a>
+</div>
+<div class="dc">
+<h4>&#128165; Breakable Scenarios</h4>
+<p style="font-size:11px;line-height:1.5">
+<strong>Beginner:</strong> OOMKilled, CrashLoop, ImagePull, MissingConfig<br>
+<strong>Intermediate:</strong> HighCPU, PendingPods, ProbeFailure<br>
+<strong>Advanced:</strong> NetworkBlock, MongoDBDown, ServiceMismatch
+</p>
+<p style="font-size:11px;margin-top:4px">Each scenario shows SRE Agent diagnosing, explaining root cause, and remediating the issue in real time.</p>
+</div>
+<div class="dc">
+<h4>&#9201;&#65039; Demo Quick Start</h4>
+<p style="font-size:11px;font-family:monospace;background:var(--g100);padding:8px;border-radius:4px;line-height:1.6">
+az login --use-device-code<br>
+.&#92;scripts&#92;deploy.ps1 -Location eastus2 -Yes<br>
+<span style="color:var(--g600)"># ~15-25 min deploy</span><br>
+break-oom <span style="color:var(--g600)"># break it</span><br>
+<span style="color:var(--g600)"># Ask agent to diagnose!</span>
+</p>
+<p style="font-size:10.5px;color:var(--g600);margin-top:6px">Demo env cost: ~$32-38/day. Destroy after demo.</p>
+</div>
+</div></div></div>
+
+<div class="ft"><div class="ft-in">
+<div class="ct"><strong>Product Manager Contact:</strong> Shamir Abdul Aziz — <a href="mailto:saziz@microsoft.com">saziz@microsoft.com</a></div>
+<div style="display:flex;gap:16px;align-items:center">
+<a href="https://www.azure.com/sreagent" target="_blank">azure.com/sreagent</a>
+<a href="https://aka.ms/sreagent/docs" target="_blank">aka.ms/sreagent/docs</a>
+<a href="https://aka.ms/sreagent/lab" target="_blank">aka.ms/sreagent/lab</a>
+</div>
+<div style="font-size:11px;color:#888">Microsoft Confidential — Seller Job Aid — April 2026</div>
+</div></div>
+</body></html>
